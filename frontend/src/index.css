@@ -1,0 +1,215 @@
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Source+Code+Pro:wght@300;400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* CyberX Cyberpunk Design System - All colors MUST be HSL */
+
+@layer base {
+  :root {
+    /* Core cyberpunk theme */
+    --background: 220 13% 5%;
+    --foreground: 180 100% 90%;
+    
+    /* Matrix terminal colors */
+    --terminal-bg: 0 0% 2%;
+    --terminal-text: 120 100% 40%;
+    --terminal-cursor: 120 100% 60%;
+    
+    /* Neon accent colors */
+    --neon-cyan: 180 100% 50%;
+    --neon-green: 120 100% 50%;
+    --neon-magenta: 300 100% 50%;
+    --neon-red: 0 100% 50%;
+    --neon-orange: 30 100% 50%;
+    
+    /* Card and surface colors */
+    --card: 220 13% 8%;
+    --card-foreground: 180 100% 90%;
+    --card-border: 180 50% 15%;
+    
+    /* Popover colors */
+    --popover: 220 13% 6%;
+    --popover-foreground: 180 100% 90%;
+    
+    /* Primary theme (neon cyan) */
+    --primary: 180 100% 50%;
+    --primary-foreground: 220 13% 5%;
+    --primary-glow: 180 100% 60%;
+    
+    /* Secondary theme (darker cyan) */
+    --secondary: 180 30% 15%;
+    --secondary-foreground: 180 100% 90%;
+    
+    /* Muted colors */
+    --muted: 220 13% 12%;
+    --muted-foreground: 180 20% 60%;
+    
+    /* Accent colors */
+    --accent: 120 100% 25%;
+    --accent-foreground: 120 100% 90%;
+    
+    /* Destructive/danger colors */
+    --destructive: 0 100% 60%;
+    --destructive-foreground: 0 0% 100%;
+    
+    /* Warning colors */
+    --warning: 30 100% 50%;
+    --warning-foreground: 30 100% 10%;
+    
+    /* Success colors */
+    --success: 120 100% 40%;
+    --success-foreground: 120 100% 10%;
+    
+    /* Border and input */
+    --border: 180 30% 18%;
+    --input: 220 13% 10%;
+    --ring: 180 100% 50%;
+    
+    /* Glowing effects */
+    --glow-cyan: 0 0 20px hsl(180 100% 50% / 0.5);
+    --glow-green: 0 0 20px hsl(120 100% 50% / 0.5);
+    --glow-red: 0 0 20px hsl(0 100% 50% / 0.5);
+    
+    /* Animations and transitions */
+    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-glow: box-shadow 0.3s ease;
+    
+    --radius: 0.5rem;
+
+    /* Sidebar cyberpunk theme */
+    --sidebar-background: 220 13% 6%;
+    --sidebar-foreground: 180 100% 90%;
+    --sidebar-primary: 180 100% 50%;
+    --sidebar-primary-foreground: 220 13% 5%;
+    --sidebar-accent: 180 30% 15%;
+    --sidebar-accent-foreground: 180 100% 90%;
+    --sidebar-border: 180 30% 18%;
+    --sidebar-ring: 180 100% 50%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground font-mono;
+    font-family: 'Source Code Pro', monospace;
+  }
+
+  /* Typography */
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Orbitron', monospace;
+    font-weight: 600;
+  }
+
+  /* Cyberpunk scrollbar */
+  ::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: hsl(var(--background));
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: hsl(var(--primary) / 0.3);
+    border-radius: 4px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: hsl(var(--primary) / 0.5);
+  }
+}
+
+@layer components {
+  /* Cyberpunk utilities */
+  .cyber-glow {
+    box-shadow: var(--glow-cyan);
+    transition: var(--transition-glow);
+  }
+
+  .cyber-glow-green {
+    box-shadow: var(--glow-green);
+    transition: var(--transition-glow);
+  }
+
+  .cyber-glow-red {
+    box-shadow: var(--glow-red);
+    transition: var(--transition-glow);
+  }
+
+  .terminal-text {
+    font-family: 'Source Code Pro', monospace;
+    color: hsl(var(--terminal-text));
+    background: hsl(var(--terminal-bg));
+  }
+
+  .neon-border {
+    border: 1px solid hsl(var(--primary));
+    box-shadow: 0 0 10px hsl(var(--primary) / 0.3);
+  }
+
+  .neon-border-active {
+    border: 1px solid hsl(var(--primary));
+    box-shadow: 0 0 15px hsl(var(--primary) / 0.6);
+  }
+
+  /* Terminal cursor animation */
+  .terminal-cursor {
+    animation: blink 1s infinite;
+  }
+
+  @keyframes blink {
+    0%, 50% { opacity: 1; }
+    51%, 100% { opacity: 0; }
+  }
+
+  /* Matrix-style text scroll */
+  .matrix-scroll {
+    animation: matrix-scroll 20s linear infinite;
+  }
+
+  @keyframes matrix-scroll {
+    0% { transform: translateY(100%); }
+    100% { transform: translateY(-100%); }
+  }
+
+  /* Cyber button effects */
+  .cyber-button {
+    position: relative;
+    background: hsl(var(--card));
+    border: 1px solid hsl(var(--primary));
+    color: hsl(var(--primary));
+    transition: all 0.3s ease;
+  }
+
+  .cyber-button:hover {
+    background: hsl(var(--primary) / 0.1);
+    box-shadow: 0 0 20px hsl(var(--primary) / 0.4);
+    transform: translateY(-1px);
+  }
+
+  .cyber-button:active {
+    transform: translateY(0);
+  }
+
+  /* Status indicators */
+  .status-secure {
+    color: hsl(var(--success));
+    text-shadow: 0 0 8px hsl(var(--success) / 0.5);
+  }
+
+  .status-warning {
+    color: hsl(var(--warning));
+    text-shadow: 0 0 8px hsl(var(--warning) / 0.5);
+  }
+
+  .status-critical {
+    color: hsl(var(--destructive));
+    text-shadow: 0 0 8px hsl(var(--destructive) / 0.5);
+  }
+}

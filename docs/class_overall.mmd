@@ -1,0 +1,166 @@
+%% Overall Class diagram for CyberX (consolidated across SQLite DBs)
+classDiagram
+  class Devices {
+    +int id
+    +str ip_address
+    +str mac_address
+    +str hostname
+    +str vendor
+    +str first_seen
+    +str last_seen
+    +int packet_count
+    +bool is_suspicious
+    +str created_at
+  }
+
+  class Attacks {
+    +int id
+    +str timestamp
+    +str attack_type
+    +str source_ip
+    +str source_mac
+    +str target_ip
+    +str severity
+    +str protocol
+    +str evidence
+    +int confidence
+    +str mitigation
+    +str created_at
+  }
+
+  class TrafficLogs {
+    +int id
+    +str timestamp
+    +str src_ip
+    +str dst_ip
+    +str src_mac
+    +str protocol
+    +int src_port
+    +int dst_port
+    +int packet_size
+    +str description
+    +str created_at
+  }
+
+  class Alerts {
+    +int id
+    +str type
+    +str severity
+    +str title
+    +str description
+    +str attacker_ip
+    +str attacker_mac
+    +str target_ips
+    +str protocol
+    +int packet_count
+    +datetime timestamp
+    +str status
+    +float confidence
+    +str additional_info
+  }
+
+  class NetworkDevices {
+    +int id
+    +str ip_address
+    +str mac_address
+    +str hostname
+    +str device_type
+    +datetime first_seen
+    +datetime last_seen
+    +bool is_trusted
+    +str vendor
+    +str os_info
+    +str open_ports
+    +datetime last_scan
+    +bool is_online
+    +int packet_count
+    +datetime last_activity
+    +int risk_score
+    +str threat_level
+  }
+
+  class SecurityAlerts {
+    +int id
+    +str alert_id
+    +str title
+    +str type
+    +str attack_type
+    +str severity
+    +str status
+    +datetime timestamp
+    +str description
+    +str source
+    +str source_ip
+    +str source_mac
+    +str target_ip
+    +str target_mac
+    +str protocol
+    +int port
+    +int packet_count
+    +str evidence
+    +str recommended_action
+    +int confidence
+    +str attack_vector
+    +str mitigation
+    +str duration
+    +str frequency
+    +str bandwidth_impact
+    +bool auto_blocked
+    +str device_name
+    +str device_vendor
+    +str connection_type
+    +str scan_pattern
+    +str ports_scanned
+    +int total_requests
+    +str original_domain
+    +str spoofed_ip
+    +str dns_responder
+    +str gateway_ip
+    +str arp_inconsistency_level
+    +str confidence_level
+    +str intercepted_data_type
+    +str interception_duration
+  }
+
+  class TrafficStats {
+    +int id
+    +datetime timestamp
+    +int total_packets
+    +int packets_per_second
+    +str bandwidth_usage
+    +str protocol_distribution
+    +str top_source_ips
+    +str top_dest_ips
+    +int suspicious_activity
+    +int malicious_packets
+    +str network_health
+    +str threat_level
+    +int active_connections
+    +float packet_rate
+  }
+
+  class BlockedIPs {
+    +int id
+    +str ip_address
+    +str mac_address
+    +str reason
+    +datetime blocked_at
+    +str blocked_by
+    +str alert_id
+    +bool is_active
+    +str block_duration
+    +datetime unblock_at
+    +str block_type
+    +str affected_device
+  }
+
+  class PacketCaptures {
+    +int id
+    +str session_id
+    +datetime start_time
+    +datetime end_time
+    +str interface
+    +int packet_count
+    +int alert_count
+    +str status
+  }

@@ -1,0 +1,9 @@
+{
+  "scripts": {
+    "backend": "cd backend && .\\.venv\\Scripts\\python.exe app.py",
+    "frontend": "cd frontend && npm run dev"
+  },
+  "dependencies": {
+    "socket.io-client": "^4.8.1"
+  }
+}

@@ -1,0 +1,173 @@
+%% Overall ER diagram for CyberX (consolidated across SQLite DBs)
+erDiagram
+  Devices {
+    INTEGER id PK
+    TEXT ip_address UNIQUE
+    TEXT mac_address
+    TEXT hostname
+    TEXT vendor
+    TEXT first_seen
+    TEXT last_seen
+    INTEGER packet_count
+    BOOLEAN is_suspicious
+    TEXT created_at
+  }
+
+  Attacks {
+    INTEGER id PK
+    TEXT timestamp
+    TEXT attack_type
+    TEXT source_ip
+    TEXT source_mac
+    TEXT target_ip
+    TEXT severity
+    TEXT protocol
+    TEXT evidence
+    INTEGER confidence
+    TEXT mitigation
+    TEXT created_at
+  }
+
+  TrafficLogs {
+    INTEGER id PK
+    TEXT timestamp
+    TEXT src_ip
+    TEXT dst_ip
+    TEXT src_mac
+    TEXT protocol
+    INTEGER src_port
+    INTEGER dst_port
+    INTEGER packet_size
+    TEXT description
+    TEXT created_at
+  }
+
+  Alerts {
+    INTEGER id PK
+    TEXT type
+    TEXT severity
+    TEXT title
+    TEXT description
+    TEXT attacker_ip
+    TEXT attacker_mac
+    TEXT target_ips
+    TEXT protocol
+    INTEGER packet_count
+    DATETIME timestamp
+    TEXT status
+    REAL confidence
+    TEXT additional_info
+  }
+
+  NetworkDevices {
+    INTEGER id PK
+    VARCHAR(45) ip_address UNIQUE
+    VARCHAR(17) mac_address UNIQUE
+    VARCHAR(100) hostname
+    VARCHAR(50) device_type
+    DATETIME first_seen
+    DATETIME last_seen
+    BOOLEAN is_trusted
+    VARCHAR(100) vendor
+    VARCHAR(100) os_info
+    TEXT open_ports
+    DATETIME last_scan
+    BOOLEAN is_online
+    INTEGER packet_count
+    DATETIME last_activity
+    INTEGER risk_score
+    VARCHAR(20) threat_level
+  }
+
+  SecurityAlerts {
+    INTEGER id PK
+    VARCHAR(100) alert_id UNIQUE
+    VARCHAR(200) title
+    VARCHAR(50) type
+    VARCHAR(50) attack_type
+    VARCHAR(20) severity
+    VARCHAR(20) status
+    DATETIME timestamp
+    TEXT description
+    VARCHAR(100) source
+    VARCHAR(45) source_ip
+    VARCHAR(17) source_mac
+    VARCHAR(45) target_ip
+    VARCHAR(17) target_mac
+    VARCHAR(10) protocol
+    INTEGER port
+    INTEGER packet_count
+    TEXT evidence
+    TEXT recommended_action
+    INTEGER confidence
+    VARCHAR(100) attack_vector
+    TEXT mitigation
+    VARCHAR(50) duration
+    VARCHAR(50) frequency
+    VARCHAR(50) bandwidth_impact
+    BOOLEAN auto_blocked
+    VARCHAR(100) device_name
+    VARCHAR(100) device_vendor
+    VARCHAR(20) connection_type
+    VARCHAR(50) scan_pattern
+    TEXT ports_scanned
+    INTEGER total_requests
+    VARCHAR(255) original_domain
+    VARCHAR(45) spoofed_ip
+    VARCHAR(45) dns_responder
+    VARCHAR(45) gateway_ip
+    VARCHAR(20) arp_inconsistency_level
+    VARCHAR(20) confidence_level
+    VARCHAR(50) intercepted_data_type
+    VARCHAR(50) interception_duration
+  }
+
+  TrafficStats {
+    INTEGER id PK
+    DATETIME timestamp
+    INTEGER total_packets
+    INTEGER packets_per_second
+    VARCHAR(50) bandwidth_usage
+    TEXT protocol_distribution
+    TEXT top_source_ips
+    TEXT top_dest_ips
+    INTEGER suspicious_activity
+    INTEGER malicious_packets
+    VARCHAR(20) network_health
+    VARCHAR(20) threat_level
+    INTEGER active_connections
+    FLOAT packet_rate
+  }
+
+  BlockedIPs {
+    INTEGER id PK
+    VARCHAR(45) ip_address UNIQUE
+    VARCHAR(17) mac_address
+    VARCHAR(200) reason
+    DATETIME blocked_at
+    VARCHAR(50) blocked_by
+    VARCHAR(100) alert_id
+    BOOLEAN is_active
+    VARCHAR(50) block_duration
+    DATETIME unblock_at
+    VARCHAR(20) block_type
+    VARCHAR(100) affected_device
+  }
+
+  PacketCaptures {
+    INTEGER id PK
+    VARCHAR(100) session_id UNIQUE
+    DATETIME start_time
+    DATETIME end_time
+    VARCHAR(50) interface
+    INTEGER packet_count
+    INTEGER alert_count
+    VARCHAR(20) status
+  }
+
+  %% Inferred relationships (no explicit FKs in schema)
+  Devices ||--o{ Attacks : "ip_address -> source_ip/target_ip (inferred)"
+  Devices ||--o{ TrafficLogs : "ip_address -> src_ip/dst_ip (inferred)"
+  NetworkDevices ||--o{ SecurityAlerts : "ip/mac -> source/target (inferred)"
+  SecurityAlerts ||--o{ BlockedIPs : "alert_id -> alert_id (when present)"
+  PacketCaptures ||--o{ SecurityAlerts : "session/context (inferred)"
